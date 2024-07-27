@@ -15,7 +15,7 @@ int temp_add(int *pos_arr, const char *inp, char delim, int pos_arr_index){
         start = 0;
     for(int i = start ; i < pos_arr_index ; ++i){
         if((pos_arr[i+1] - pos_arr[i]) >= 5)
-            continue
+            continue ;
         temp_res = 0;
         for(int j = pos_arr[i]+1; j < pos_arr[i+1]; ++j){
             temp_res = (temp_res * 10) + int(inp[j]);
