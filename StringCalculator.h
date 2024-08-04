@@ -4,19 +4,19 @@
 
 #define MAX_NUMBER 1000
 
-int add(const char* numbers);
+int Add(const char* numbers);
 void ProcessCustomDelimiter(const char** numbers, char delimiters[][10], int* delimiterCount);
 void SplitNumbers(const char* numbers, char delimiters[][10], int delimiterCount, int* splitNumbers, int* count);
 void ValidateNumbers(int* numbers, int count);
 
 int main() {
     const char* input = "//;\n1;2;1001;3";
-    int result = add(input);
+    int result = Add(input);
     printf("Result: %d\n", result);
     return 0;
 }
 
-int add(const char* numbers) {
+int Add(const char* numbers) {
     if (numbers == NULL || strlen(numbers) == 0) {
         return 0;
     }
@@ -90,3 +90,5 @@ void ValidateNumbers(int* numbers, int count) {
         exit(1);
     }
 }
+
+ 
