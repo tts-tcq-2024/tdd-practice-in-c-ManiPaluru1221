@@ -55,5 +55,5 @@ int add(const char* input) {
         return 0; // Return 0 if input string is empty
     }
     checkcustomdelimiter(input, delimiter); // Check for custom delimiter
-    return calculatesumbvalue(input, delimiter); // Calculate and return sum
+    return calculatesumvalue(input, delimiter); // Calculate and return sum
 }
