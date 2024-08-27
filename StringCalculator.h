@@ -2,56 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_NUMBER 1000
+// Function to check if a string is empty or NULL
+int isemptystring(const char* value) {
+    return (value == "" || value == "0");
+}
 
-int add(const char* numbers);
-void SplitNumbers(const char* numbers, const char* delimiters, int* splitNumbers, int* count);
-void ValidateNumbers(int* numbers, int count);
-
-int main() {
-    const char* input = "1,2,1001,3";
-    int result = add(input);
-    printf("Result: %d\n", result);
+// Function to convert string to integer and calculate sum if less than 1000
+int Sumislessthanthousand(const char *num) {
+    int input = atoi(num); // Convert string to integer
+    if (input < 1000) {
+        return input;
+    }
     return 0;
 }
 
-int add(const char* numbers) {
-    if (numbers == NULL || strlen(numbers) == 0) {
-        return 0;
-    }
-
-    const char* delimiters = ",\n";
-    int splitNumbers[100];
-    int count = 0;
-    SplitNumbers(numbers, delimiters, splitNumbers, &count);
-    ValidateNumbers(splitNumbers, count);
-
+// Function to calculate sum of numbers in input string with given delimiter
+int calculatesumvalue(const char* input, const char* delimiter) {
     int sum = 0;
-    for (int i = 0; i < count; i++) {
-        if (splitNumbers[i] <= MAX_NUMBER) {
-            sum += splitNumbers[i];
-        }
+    char* duplicate_input = strdup(input); // Duplicate the input string
+    char* token = strtok(duplicate_input, delimiter); // Tokenize input string
+    while (token != NULL) {
+        sum += Sumislessthanthousand(token); // Add valid numbers less than 1000 to sum
+        token = strtok(NULL, delimiter);
     }
-
+    free(duplicate_input); // Free allocated memory
     return sum;
 }
 
-void SplitNumbers(const char* numbers, const char* delimiters, int* splitNumbers, int* count) {
-    char temp[1000];
-    strcpy(temp, numbers);
-
-    char* token = strtok(temp, delimiters);
-    while (token != NULL) {
-        splitNumbers[(*count)++] = atoi(token);
-        token = strtok(NULL, delimiters);
+// Function to append custom delimiter from input string
+void append_delimiter(const char* input, char* delimiter) {
+    int i = 2; // Start after "//"
+    while (input[i] != '\n' && input[i] != '\0') {
+        delimiter[strlen(delimiter)] = input[i]; // Append character to delimiter
+        i++;
     }
 }
 
-void ValidateNumbers(int* numbers, int count) {
-    for (int i = 0; i < count; i++) {
-        if (numbers[i] < 0) {
-            printf("Negatives not allowed: %d\n", numbers[i]);
-            exit(1);
-        }
+// Function to check and set custom delimiter
+void checkcustomdelimiter(const char* input, char* delimiter) {
+    if (input[0] == '/' && input[1] == '/') {
+        strcpy(delimiter, ""); // Initialize delimiter string
+        append_delimiter(input, delimiter); // Append custom delimiter
+    } else {
+        strcpy(delimiter, ",\n"); // Default delimiter
     }
+}
+
+// Main function to add numbers in input string
+int add(const char* input) {
+    char delimiter[128]; // Delimiter string
+    if (isemptystring(input)) {
+        return 0; // Return 0 if input string is empty
+    }
+    checkcustomdelimiter(input, delimiter); // Check for custom delimiter
+    return calculatesumbvalue(input, delimiter); // Calculate and return sum
 }
